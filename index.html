@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abhi | Portfolio</title>
+  <meta name="description" content="Abhi - Beginner Developer | Multiplayer Game Dev | Web Projects | Portfolio" />
+
+  <style>
+    :root{
+      --bg: #070a10;
+      --card: rgba(255,255,255,0.06);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.65);
+      --accent: #ff4d4d;
+      --accent2: #6ee7ff;
+      --border: rgba(255,255,255,0.12);
+      --shadow: 0 25px 60px rgba(0,0,0,0.55);
+      --radius: 22px;
+    }
+
+    *{ box-sizing: border-box; margin: 0; padding: 0; }
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial, sans-serif;
+      background: radial-gradient(900px 500px at 15% 10%, rgba(255,77,77,0.22), transparent 55%),
+                  radial-gradient(900px 500px at 80% 10%, rgba(110,231,255,0.18), transparent 60%),
+                  linear-gradient(180deg, #070a10, #05070c);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    .container{
+      width: 100%;
+      margin: 0 auto;
+      padding: 28px 40px 70px;
+    }
+
+    /* NAV */
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      border-radius: 999px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.30);
+      position: sticky;
+      top: 14px;
+      backdrop-filter: blur(12px);
+      z-index: 50;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+    }
+    .logo{
+      width: 38px; height: 38px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 15px 30px rgba(255,77,77,0.15);
+    }
+
+    .navlinks{
+      display:flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .navlinks a{
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      transition: 0.25s ease;
+    }
+    .navlinks a:hover{
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .cta{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      font-weight: 700;
+      font-size: 14px;
+      cursor:pointer;
+      transition: transform .15s ease, background .25s ease;
+      white-space: nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.09); }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(255,77,77,0.95), rgba(110,231,255,0.40));
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    /* HERO */
+    .hero{
+      margin-top: 28px;
+      display:grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .card{
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .hero h1{
+      font-size: clamp(30px, 3.2vw, 44px);
+      line-height: 1.1;
+      letter-spacing: -0.6px;
+    }
+    .hero p{
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .badges{
+      margin-top: 16px;
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .badge{
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.84);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .heroActions{
+      margin-top: 18px;
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .quickCard{
+      display:flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .quickCard::before{
+      content:"";
+      position:absolute;
+      inset: -70px -90px auto auto;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,77,77,0.30), transparent 60%);
+      filter: blur(2px);
+      transform: rotate(20deg);
+    }
+
+            .statGrid{
+        display:grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-top: 10px;
+        }
+
+    .stat{
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.18);
+      border-radius: 18px;
+      padding: 14px;
+    }
+    .stat .num{
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: 0.2px;
+    }
+    .stat .label{
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    /* SECTIONS */
+    section{ margin-top: 22px; }
+    .sectionTitle{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .sectionTitle h2{
+      font-size: 18px;
+      letter-spacing: 0.2px;
+    }
+    .sectionTitle span{
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .proj h3{ font-size: 16px; margin-bottom: 8px; }
+    .proj p{ color: var(--muted); font-size: 14px; }
+
+    .pillrow{
+      margin-top: 12px;
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pill{
+      font-size: 12px;
+      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.85);
+    }
+
+    .proj .links{
+      margin-top: 14px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* SKILLS */
+    .skillsGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .skillBox ul{
+      list-style: none;
+      margin-top: 10px;
+      display:grid;
+      gap: 8px;
+    }
+    .skillBox li{
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.15);
+      color: rgba(255,255,255,0.86);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .miniNote{
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    /* CONTACT */
+    .contactWrap{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .input{
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.18);
+      color: var(--text);
+      outline: none;
+      font-size: 14px;
+    }
+    textarea.input{ min-height: 110px; resize: vertical; }
+
+    .footer{
+      margin-top: 25px;
+      color: rgba(255,255,255,0.55);
+      text-align:center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px){
+      .hero{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: 1fr; }
+      .skillsGrid{ grid-template-columns: 1fr; }
+      .contactWrap{ grid-template-columns: 1fr; }
+      .nav{ border-radius: 22px; padding: 14px; }
+    }
+        @media (max-width: 600px){
+    .grid{ grid-template-columns: 1fr; }
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- NAV -->
+    <nav class="nav">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>Abhishek Singh<span style="color:rgba(255,255,255,0.55); font-weight:700;">| Portfolio</span></div>
+      </div>
+
+      <div class="navlinks">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="cta">
+        <a class="btn primary" href="#projects">View Projects</a>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="card">
+        <h1>Beginner Developer 🚀<br/>Building Multiplayer Games & Web Apps</h1>
+        <p>
+          Hi, I’m <b>Abhi</b> — a student & beginner developer from India.
+          I’m learning <b>Node.js</b>, <b>Socket.IO</b> and exploring <b>AWS hosting</b>.
+          I love creating ideas like real-time multiplayer games and AI-based useful websites.
+        </p>
+
+        <div class="badges">
+          <div class="badge">2D Browser Games</div>
+          <div class="badge">Socket.IO (Learning)</div>
+          <div class="badge">Node.js (Learning)</div>
+          <div class="badge">AWS Basics</div>
+          <div class="badge">UI Planning</div>
+        </div>
+
+        <div class="heroActions">
+          <a class="btn primary" href="#contact">Contact Me</a>
+          <button class="btn" onclick="copyEmail()">Copy Email</button>
+          <a class="btn" href="https://github.com/thisisme1289-ux" target="_blank">GitHub</a>
+        </div>
+
+        <p class="miniNote">Email: <b>thisisme1289@gmail.com</b></p>
+      </div>
+
+      <div class="card quickCard">
+        <div>
+          <div style="font-weight:900; font-size:18px;">Quick Overview</div>
+          <div style="color:rgba(255,255,255,0.65); font-size:14px; margin-top:6px;">
+            What I’m focused on right now:
+          </div>
+
+          <div class="statGrid">
+            <div class="stat">
+              <div class="num">Realtime</div>
+              <div class="label">Multiplayer systems</div>
+            </div>
+            <div class="stat">
+              <div class="num">Web</div>
+              <div class="label">HTML/CSS/JS</div>
+            </div>
+            <div class="stat">
+              <div class="num">Node</div>
+              <div class="label">Backend practice</div>
+            </div>
+            <div class="stat">
+              <div class="num">Ideas</div>
+              <div class="label">AI + Job Suggestions</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn" href="#projects">See Work</a>
+          <a class="btn" href="#skills">My Skills</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="sectionTitle">
+        <h2>About Me</h2>
+        <span>Student • Beginner Developer • Learning by building</span>
+      </div>
+
+      <div class="card">
+        <p style="color:rgba(255,255,255,0.74); font-size:15px;">
+          I’m interested in creating <b>2D browser-based multiplayer games</b> and useful web apps.
+          One of my main project ideas is <b>CPL (Class Premier League)</b>, a 1v1 multiplayer game format with an 11-player style concept.
+          I’m also working on an <b>AI-based Job Suggestion website</b> where users answer questions and get smart job recommendations
+          (including private + government jobs).
+        </p>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="sectionTitle">
+        <h2>Projects</h2>
+        <span>My best ideas & builds</span>
+      </div>
+
+      <div class="grid">
+        <div class="card proj">
+          <h3>⚽ CPL (Class Premier League)</h3>
+          <p>
+            A 1v1 browser-based multiplayer game concept with an 11-player format.
+            Focused on real-time gameplay planning using Socket.IO.
+          </p>
+          <div class="pillrow">
+            <div class="pill">Multiplayer</div>
+            <div class="pill">Socket.IO</div>
+            <div class="pill">Node.js</div>
+            <div class="pill">Game Concept</div>
+          </div>
+          <div class="links">
+            <a class="btn" href="https://github.com/thisisme1289-ux" target="_blank">GitHub</a>
+            <a class="btn" href="#" onclick="alert('Add your game demo link here!')">Live Demo</a>
+          </div>
+        </div>
+
+        <div class="card proj">
+          <h3>🤖 AI Job Suggestion Website</h3>
+          <p>
+            A website idea where users answer questions and AI suggests jobs.
+            AI asks follow-up questions for better recommendations.
+          </p>
+          <div class="pillrow">
+            <div class="pill">AI Workflow</div>
+            <div class="pill">Web App</div>
+            <div class="pill">India Jobs</div>
+            <div class="pill">Govt + Private</div>
+          </div>
+          <div class="links">
+            <a class="btn" href="https://github.com/thisisme1289-ux" target="_blank">GitHub</a>
+            <a class="btn" href="#" onclick="alert('Add your project link here!')">Project Link</a>
+          </div>
+        </div>
+
+        <div class="card proj">
+          <h3>🧩 Small Practice Projects</h3>
+          <p>
+            Small learning builds like UI layouts, basic websites, and experiments for improving coding skills.
+          </p>
+          <div class="pillrow">
+            <div class="pill">HTML</div>
+            <div class="pill">CSS</div>
+            <div class="pill">JavaScript</div>
+            <div class="pill">UI Practice</div>
+          </div>
+          <div class="links">
+            <a class="btn" href="https://github.com/thisisme1289-ux" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="sectionTitle">
+        <h2>Skills</h2>
+        <span>What I’m learning & using</span>
+      </div>
+
+      <div class="skillsGrid">
+        <div class="card skillBox">
+          <h3 style="font-size:16px;">Technical Skills</h3>
+          <ul>
+            <li>HTML, CSS, JavaScript (Basic)</li>
+            <li>Node.js (Learning)</li>
+            <li>Socket.IO (Learning)</li>
+            <li>AWS Hosting (Basic understanding)</li>
+          </ul>
+          <div class="miniNote">I’m improving daily by building real projects.</div>
+        </div>
+
+        <div class="card skillBox">
+          <h3 style="font-size:16px;">Strengths</h3>
+          <ul>
+            <li>Fast Learner</li>
+            <li>Creative Game Ideas</li>
+            <li>Planning & Structuring Projects</li>
+            <li>Consistent Practice Mindset</li>
+          </ul>
+          <div class="miniNote">I like building useful and fun apps for real users.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="sectionTitle">
+        <h2>Contact</h2>
+        <span>Let’s connect 🚀</span>
+      </div>
+
+      <div class="contactWrap">
+        <div class="card">
+          <h3 style="font-size:16px;">Contact Info</h3>
+          <p style="color:rgba(255,255,255,0.70); margin-top:10px;">
+            📍 India <br/>
+            ✉️ <b>thisisme1289@gmail.com</b> <br/>
+            🔗 <a href="https://github.com/thisisme1289-ux" target="_blank" style="text-decoration:underline;">github.com/thisisme1289-ux</a>
+          </p>
+
+          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn primary" onclick="copyEmail()">Copy Email</button>
+            <button class="btn" onclick="scrollToTop()">Back to Top</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="font-size:16px;">Send a Message</h3>
+          <p style="color:rgba(255,255,255,0.65); font-size:14px; margin-top:6px;">
+            This form is demo only. If you want, I can connect it to Gmail (EmailJS).
+          </p>
+
+          <div style="margin-top:12px; display:grid; gap:10px;">
+            <input class="input" placeholder="Your Name" />
+            <input class="input" placeholder="Your Email" />
+            <textarea class="input" placeholder="Your Message"></textarea>
+            <button class="btn primary" onclick="alert('Not connected yet. Ask me to connect the form!')">
+              Send Message
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      © <span id="year"></span> Abhi • Built with ❤️ | Dark Portfolio
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function copyEmail(){
+      const email = "thisisme1289@gmail.com";
+      navigator.clipboard.writeText(email);
+      alert("Email copied: " + email);
+    }
+
+    function scrollToTop(){
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
+</body>
+</html>
