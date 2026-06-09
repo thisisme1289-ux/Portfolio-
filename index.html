@@ -1,580 +1,191 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Abhi | Portfolio</title>
-  <meta name="description" content="Abhi - Beginner Developer | Multiplayer Game Dev | Web Projects | Portfolio" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abhishek Singh | Web Portfolio</title>
+    <meta
+      name="description"
+      content="Abhishek Singh builds playful, professional websites and web apps for clients and startup founders."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <canvas id="orbital-canvas" aria-hidden="true"></canvas>
 
-  <style>
-    :root{
-      --bg: #070a10;
-      --card: rgba(255,255,255,0.06);
-      --text: rgba(255,255,255,0.92);
-      --muted: rgba(255,255,255,0.65);
-      --accent: #ff4d4d;
-      --accent2: #6ee7ff;
-      --border: rgba(255,255,255,0.12);
-      --shadow: 0 25px 60px rgba(0,0,0,0.55);
-      --radius: 22px;
-    }
-
-    *{ box-sizing: border-box; margin: 0; padding: 0; }
-    body{
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial, sans-serif;
-      background: radial-gradient(900px 500px at 15% 10%, rgba(255,77,77,0.22), transparent 55%),
-                  radial-gradient(900px 500px at 80% 10%, rgba(110,231,255,0.18), transparent 60%),
-                  linear-gradient(180deg, #070a10, #05070c);
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    a{ color: inherit; text-decoration: none; }
-    .container{
-      width: 100%;
-      margin: 0 auto;
-      padding: 28px 40px 70px;
-    }
-
-    /* NAV */
-    .nav{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 14px 18px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.04);
-      border-radius: 999px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.30);
-      position: sticky;
-      top: 14px;
-      backdrop-filter: blur(12px);
-      z-index: 50;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      font-weight: 800;
-      letter-spacing: 0.4px;
-    }
-    .logo{
-      width: 38px; height: 38px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 15px 30px rgba(255,77,77,0.15);
-    }
-
-    .navlinks{
-      display:flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .navlinks a{
-      color: var(--muted);
-      font-weight: 600;
-      font-size: 14px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      transition: 0.25s ease;
-    }
-    .navlinks a:hover{
-      color: var(--text);
-      background: rgba(255,255,255,0.06);
-    }
-
-    .cta{
-      display:flex;
-      gap: 10px;
-      align-items:center;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.06);
-      color: var(--text);
-      font-weight: 700;
-      font-size: 14px;
-      cursor:pointer;
-      transition: transform .15s ease, background .25s ease;
-      white-space: nowrap;
-    }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.09); }
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(255,77,77,0.95), rgba(110,231,255,0.40));
-      border: 1px solid rgba(255,255,255,0.18);
-    }
-
-    /* HERO */
-    .hero{
-      margin-top: 28px;
-      display:grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 22px;
-      align-items: stretch;
-    }
-
-    .card{
-      border: 1px solid var(--border);
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 22px;
-    }
-
-    .hero h1{
-      font-size: clamp(30px, 3.2vw, 44px);
-      line-height: 1.1;
-      letter-spacing: -0.6px;
-    }
-    .hero p{
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 16px;
-    }
-
-    .badges{
-      margin-top: 16px;
-      display:flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .badge{
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.10);
-      color: rgba(255,255,255,0.84);
-      font-weight: 700;
-      font-size: 13px;
-    }
-
-    .heroActions{
-      margin-top: 18px;
-      display:flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .quickCard{
-      display:flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 14px;
-      position: relative;
-      overflow: hidden;
-    }
-    .quickCard::before{
-      content:"";
-      position:absolute;
-      inset: -70px -90px auto auto;
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,77,77,0.30), transparent 60%);
-      filter: blur(2px);
-      transform: rotate(20deg);
-    }
-
-            .statGrid{
-        display:grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        margin-top: 10px;
-        }
-
-    .stat{
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(0,0,0,0.18);
-      border-radius: 18px;
-      padding: 14px;
-    }
-    .stat .num{
-      font-weight: 900;
-      font-size: 18px;
-      letter-spacing: 0.2px;
-    }
-    .stat .label{
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 6px;
-    }
-
-    /* SECTIONS */
-    section{ margin-top: 22px; }
-    .sectionTitle{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-    .sectionTitle h2{
-      font-size: 18px;
-      letter-spacing: 0.2px;
-    }
-    .sectionTitle span{
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-
-    .proj h3{ font-size: 16px; margin-bottom: 8px; }
-    .proj p{ color: var(--muted); font-size: 14px; }
-
-    .pillrow{
-      margin-top: 12px;
-      display:flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .pill{
-      font-size: 12px;
-      font-weight: 800;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
-      color: rgba(255,255,255,0.85);
-    }
-
-    .proj .links{
-      margin-top: 14px;
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    /* SKILLS */
-    .skillsGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    .skillBox ul{
-      list-style: none;
-      margin-top: 10px;
-      display:grid;
-      gap: 8px;
-    }
-    .skillBox li{
-      padding: 10px 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(0,0,0,0.15);
-      color: rgba(255,255,255,0.86);
-      font-weight: 700;
-      font-size: 14px;
-    }
-    .miniNote{
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 8px;
-    }
-
-    /* CONTACT */
-    .contactWrap{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    .input{
-      width: 100%;
-      padding: 12px 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.18);
-      color: var(--text);
-      outline: none;
-      font-size: 14px;
-    }
-    textarea.input{ min-height: 110px; resize: vertical; }
-
-    .footer{
-      margin-top: 25px;
-      color: rgba(255,255,255,0.55);
-      text-align:center;
-      font-size: 13px;
-    }
-
-    @media (max-width: 900px){
-      .hero{ grid-template-columns: 1fr; }
-      .grid{ grid-template-columns: 1fr; }
-      .skillsGrid{ grid-template-columns: 1fr; }
-      .contactWrap{ grid-template-columns: 1fr; }
-      .nav{ border-radius: 22px; padding: 14px; }
-    }
-        @media (max-width: 600px){
-    .grid{ grid-template-columns: 1fr; }
-    }
-
-  </style>
-</head>
-
-<body>
-  <div class="container">
-    <!-- NAV -->
-    <nav class="nav">
-      <div class="brand">
-        <div class="logo"></div>
-        <div>Abhishek Singh<span style="color:rgba(255,255,255,0.55); font-weight:700;">| Portfolio</span></div>
-      </div>
-
-      <div class="navlinks">
-        <a href="#about">About</a>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Abhishek Singh home">
+        <span class="brand-mark">AS</span>
+        <span>Abhishek Singh</span>
+      </a>
+      <nav class="top-nav" aria-label="Primary navigation">
         <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
+        <a href="#process">Process</a>
         <a href="#contact">Contact</a>
-      </div>
+      </nav>
+    </header>
 
-      <div class="cta">
-        <a class="btn primary" href="#projects">View Projects</a>
-      </div>
-    </nav>
-
-    <!-- HERO -->
-    <div class="hero">
-      <div class="card">
-        <h1>Beginner Developer 🚀<br/>Building Multiplayer Games & Web Apps</h1>
-        <p>
-          Hi, I’m <b>Abhi</b> — a student & beginner developer from India.
-          I’m learning <b>Node.js</b>, <b>Socket.IO</b> and exploring <b>AWS hosting</b>.
-          I love creating ideas like real-time multiplayer games and AI-based useful websites.
-        </p>
-
-        <div class="badges">
-          <div class="badge">2D Browser Games</div>
-          <div class="badge">Socket.IO (Learning)</div>
-          <div class="badge">Node.js (Learning)</div>
-          <div class="badge">AWS Basics</div>
-          <div class="badge">UI Planning</div>
-        </div>
-
-        <div class="heroActions">
-          <a class="btn primary" href="#contact">Contact Me</a>
-          <button class="btn" onclick="copyEmail()">Copy Email</button>
-          <a class="btn" href="https://github.com/thisisme1289-ux" target="_blank">GitHub</a>
-        </div>
-
-        <p class="miniNote">Email: <b>thisisme1289@gmail.com</b></p>
-      </div>
-
-      <div class="card quickCard">
-        <div>
-          <div style="font-weight:900; font-size:18px;">Quick Overview</div>
-          <div style="color:rgba(255,255,255,0.65); font-size:14px; margin-top:6px;">
-            What I’m focused on right now:
-          </div>
-
-          <div class="statGrid">
-            <div class="stat">
-              <div class="num">Realtime</div>
-              <div class="label">Multiplayer systems</div>
-            </div>
-            <div class="stat">
-              <div class="num">Web</div>
-              <div class="label">HTML/CSS/JS</div>
-            </div>
-            <div class="stat">
-              <div class="num">Node</div>
-              <div class="label">Backend practice</div>
-            </div>
-            <div class="stat">
-              <div class="num">Ideas</div>
-              <div class="label">AI + Job Suggestions</div>
-            </div>
-          </div>
-        </div>
-
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn" href="#projects">See Work</a>
-          <a class="btn" href="#skills">My Skills</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- ABOUT -->
-    <section id="about">
-      <div class="sectionTitle">
-        <h2>About Me</h2>
-        <span>Student • Beginner Developer • Learning by building</span>
-      </div>
-
-      <div class="card">
-        <p style="color:rgba(255,255,255,0.74); font-size:15px;">
-          I’m interested in creating <b>2D browser-based multiplayer games</b> and useful web apps.
-          One of my main project ideas is <b>CPL (Class Premier League)</b>, a 1v1 multiplayer game format with an 11-player style concept.
-          I’m also working on an <b>AI-based Job Suggestion website</b> where users answer questions and get smart job recommendations
-          (including private + government jobs).
-        </p>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects">
-      <div class="sectionTitle">
-        <h2>Projects</h2>
-        <span>My best ideas & builds</span>
-      </div>
-
-      <div class="grid">
-        <div class="card proj">
-          <h3>⚽ CPL (Class Premier League)</h3>
-          <p>
-            A 1v1 browser-based multiplayer game concept with an 11-player format.
-            Focused on real-time gameplay planning using Socket.IO.
+    <main>
+      <section class="hero section" id="home">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">Website & Web App Developer</p>
+          <h1>Playful digital products with serious business intent.</h1>
+          <p class="hero-text">
+            I help clients and startup founders turn ideas into fast, interactive websites and web apps that feel clear,
+            memorable, and ready to use.
           </p>
-          <div class="pillrow">
-            <div class="pill">Multiplayer</div>
-            <div class="pill">Socket.IO</div>
-            <div class="pill">Node.js</div>
-            <div class="pill">Game Concept</div>
-          </div>
-          <div class="links">
-            <a class="btn" href="https://github.com/thisisme1289-ux" target="_blank">GitHub</a>
-            <a class="btn" href="#" onclick="alert('Add your game demo link here!')">Live Demo</a>
+          <div class="hero-actions">
+            <a class="button primary" href="#projects">Explore Projects</a>
+            <a class="button secondary" href="#contact">Start a Build</a>
           </div>
         </div>
 
-        <div class="card proj">
-          <h3>🤖 AI Job Suggestion Website</h3>
-          <p>
-            A website idea where users answer questions and AI suggests jobs.
-            AI asks follow-up questions for better recommendations.
-          </p>
-          <div class="pillrow">
-            <div class="pill">AI Workflow</div>
-            <div class="pill">Web App</div>
-            <div class="pill">India Jobs</div>
-            <div class="pill">Govt + Private</div>
+        <div class="mission-panel reveal" aria-label="Interactive navigation">
+          <div class="panel-topline">
+            <span>Mission Map</span>
+            <span class="status-dot">Online</span>
           </div>
-          <div class="links">
-            <a class="btn" href="https://github.com/thisisme1289-ux" target="_blank">GitHub</a>
-            <a class="btn" href="#" onclick="alert('Add your project link here!')">Project Link</a>
-          </div>
-        </div>
-
-        <div class="card proj">
-          <h3>🧩 Small Practice Projects</h3>
-          <p>
-            Small learning builds like UI layouts, basic websites, and experiments for improving coding skills.
-          </p>
-          <div class="pillrow">
-            <div class="pill">HTML</div>
-            <div class="pill">CSS</div>
-            <div class="pill">JavaScript</div>
-            <div class="pill">UI Practice</div>
-          </div>
-          <div class="links">
-            <a class="btn" href="https://github.com/thisisme1289-ux" target="_blank">GitHub</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills">
-      <div class="sectionTitle">
-        <h2>Skills</h2>
-        <span>What I’m learning & using</span>
-      </div>
-
-      <div class="skillsGrid">
-        <div class="card skillBox">
-          <h3 style="font-size:16px;">Technical Skills</h3>
-          <ul>
-            <li>HTML, CSS, JavaScript (Basic)</li>
-            <li>Node.js (Learning)</li>
-            <li>Socket.IO (Learning)</li>
-            <li>AWS Hosting (Basic understanding)</li>
-          </ul>
-          <div class="miniNote">I’m improving daily by building real projects.</div>
-        </div>
-
-        <div class="card skillBox">
-          <h3 style="font-size:16px;">Strengths</h3>
-          <ul>
-            <li>Fast Learner</li>
-            <li>Creative Game Ideas</li>
-            <li>Planning & Structuring Projects</li>
-            <li>Consistent Practice Mindset</li>
-          </ul>
-          <div class="miniNote">I like building useful and fun apps for real users.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-      <div class="sectionTitle">
-        <h2>Contact</h2>
-        <span>Let’s connect 🚀</span>
-      </div>
-
-      <div class="contactWrap">
-        <div class="card">
-          <h3 style="font-size:16px;">Contact Info</h3>
-          <p style="color:rgba(255,255,255,0.70); margin-top:10px;">
-            📍 India <br/>
-            ✉️ <b>thisisme1289@gmail.com</b> <br/>
-            🔗 <a href="https://github.com/thisisme1289-ux" target="_blank" style="text-decoration:underline;">github.com/thisisme1289-ux</a>
-          </p>
-
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
-            <button class="btn primary" onclick="copyEmail()">Copy Email</button>
-            <button class="btn" onclick="scrollToTop()">Back to Top</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3 style="font-size:16px;">Send a Message</h3>
-          <p style="color:rgba(255,255,255,0.65); font-size:14px; margin-top:6px;">
-            This form is demo only. If you want, I can connect it to Gmail (EmailJS).
-          </p>
-
-          <div style="margin-top:12px; display:grid; gap:10px;">
-            <input class="input" placeholder="Your Name" />
-            <input class="input" placeholder="Your Email" />
-            <textarea class="input" placeholder="Your Message"></textarea>
-            <button class="btn primary" onclick="alert('Not connected yet. Ask me to connect the form!')">
-              Send Message
+          <div class="mission-track">
+            <button class="mission-node active" data-target="projects" aria-label="Jump to projects">
+              <span>01</span>
+              <strong>Projects</strong>
+            </button>
+            <button class="mission-node" data-target="process" aria-label="Jump to process">
+              <span>02</span>
+              <strong>Process</strong>
+            </button>
+            <button class="mission-node" data-target="contact" aria-label="Jump to contact">
+              <span>03</span>
+              <strong>Contact</strong>
             </button>
           </div>
+          <div class="scoreboard">
+            <div>
+              <span class="score-label">Focus</span>
+              <strong id="focus-score">Projects</strong>
+            </div>
+            <div>
+              <span class="score-label">Mode</span>
+              <strong>Founder-ready</strong>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <div class="footer">
-      © <span id="year"></span> Abhi • Built with ❤️ | Dark Portfolio
-    </div>
-  </div>
+      <section class="section projects-section" id="projects">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Selected Work</p>
+          <h2>Projects built to launch, learn, and impress.</h2>
+        </div>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+        <div class="filter-bar reveal" aria-label="Project filters">
+          <button class="filter-button active" data-filter="all">All</button>
+          <button class="filter-button" data-filter="website">Websites</button>
+          <button class="filter-button" data-filter="app">Web Apps</button>
+          <button class="filter-button" data-filter="startup">Startup</button>
+        </div>
 
-    function copyEmail(){
-      const email = "thisisme1289@gmail.com";
-      navigator.clipboard.writeText(email);
-      alert("Email copied: " + email);
-    }
+        <div class="project-grid">
+          <article class="project-card reveal" data-category="website startup">
+            <div class="project-visual visual-aurora"></div>
+            <div class="project-content">
+              <p>Website / Startup</p>
+              <h3>Launch-ready Brand Site</h3>
+              <span>A conversion-focused site for a new product with responsive sections, motion, and lead capture.</span>
+            </div>
+          </article>
+          <article class="project-card reveal" data-category="app startup">
+            <div class="project-visual visual-grid"></div>
+            <div class="project-content">
+              <p>Web App / Dashboard</p>
+              <h3>Founder Control Room</h3>
+              <span>A clean dashboard concept for tracking users, revenue, tasks, and launch signals.</span>
+            </div>
+          </article>
+          <article class="project-card reveal" data-category="website">
+            <div class="project-visual visual-rings"></div>
+            <div class="project-content">
+              <p>Website / Portfolio</p>
+              <h3>Interactive Portfolio System</h3>
+              <span>A playful portfolio format with game-like navigation, scroll states, and animated project cards.</span>
+            </div>
+          </article>
+        </div>
+      </section>
 
-    function scrollToTop(){
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  </script>
-</body>
+      <section class="section process-section" id="process">
+        <div class="section-heading reveal">
+          <p class="eyebrow">How I Work</p>
+          <h2>Simple steps, polished results.</h2>
+        </div>
+        <div class="process-grid">
+          <div class="process-step reveal">
+            <span>01</span>
+            <h3>Discover</h3>
+            <p>Clarify the goal, audience, offer, and features that matter most.</p>
+          </div>
+          <div class="process-step reveal">
+            <span>02</span>
+            <h3>Prototype</h3>
+            <p>Shape the interface quickly so the experience can be tested early.</p>
+          </div>
+          <div class="process-step reveal">
+            <span>03</span>
+            <h3>Build</h3>
+            <p>Develop a responsive, interactive product with clean structure.</p>
+          </div>
+          <div class="process-step reveal">
+            <span>04</span>
+            <h3>Launch</h3>
+            <p>Polish performance, fix details, and prepare the site for real users.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact-section" id="contact">
+        <div class="contact-copy reveal">
+          <p class="eyebrow">Start Here</p>
+          <h2>Have a website or web app idea?</h2>
+          <p>
+            Send the goal, timeline, and any project links. I will help turn it into a clear build plan and a sharp first
+            version.
+          </p>
+        </div>
+        <form class="contact-form reveal">
+          <label>
+            Name
+            <input type="text" name="name" placeholder="Your name" />
+          </label>
+          <label>
+            Project Type
+            <select name="project-type">
+              <option>Website</option>
+              <option>Web app</option>
+              <option>Startup MVP</option>
+              <option>Portfolio</option>
+            </select>
+          </label>
+          <label>
+            Message
+            <textarea name="message" rows="4" placeholder="Tell me what you want to build"></textarea>
+          </label>
+          <button class="button primary" type="submit">Prepare Message</button>
+          <p class="form-note" id="form-note" role="status"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Abhishek Singh</span>
+      <span>Websites · Web Apps · Interactive Experiences</span>
+    </footer>
+
+    <script type="module" src="./script.js"></script>
+  </body>
 </html>
