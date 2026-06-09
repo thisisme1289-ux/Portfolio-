@@ -381,6 +381,31 @@ h3 {
     #161818;
 }
 
+.visual-circuit {
+  background:
+    linear-gradient(90deg, transparent 48%, rgba(110, 231, 168, 0.45) 49% 51%, transparent 52%),
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    radial-gradient(circle at 26% 30%, rgba(246, 200, 95, 0.45), transparent 22%),
+    #121923;
+  background-size: auto, 32px 32px, auto, auto;
+}
+
+.visual-wave {
+  background:
+    repeating-linear-gradient(135deg, rgba(99, 216, 255, 0.32) 0 3px, transparent 3px 18px),
+    radial-gradient(circle at 75% 25%, rgba(244, 143, 177, 0.42), transparent 25%),
+    linear-gradient(135deg, #111a20, #17131c);
+}
+
+.visual-data {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.11) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.11) 1px, transparent 1px),
+    radial-gradient(circle at 30% 70%, rgba(110, 231, 168, 0.34), transparent 28%),
+    linear-gradient(135deg, #141817, #1a1720);
+  background-size: 42px 42px, 42px 42px, auto, auto;
+}
+
 .project-content {
   padding: 1.05rem;
 }
@@ -389,6 +414,14 @@ h3 {
 .process-step p {
   color: var(--muted);
   line-height: 1.65;
+}
+
+.project-content a {
+  display: inline-flex;
+  margin-top: 1rem;
+  color: var(--green);
+  font-size: 0.9rem;
+  font-weight: 900;
 }
 
 .process-grid {

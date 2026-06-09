@@ -1,13 +1,23 @@
 const canvas = document.querySelector("#orbital-canvas");
-const context = canvas.getContext("2d");
+const context = canvas?.getContext("2d");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const contactEmail = "thisisme1289@gmail.com";
 
 let width = 0;
 let height = 0;
 let points = [];
 let angle = 0;
 
+function getSceneCenter() {
+  return {
+    x: width < 900 ? width * 0.5 : width * 0.68,
+    y: height * 0.48,
+  };
+}
+
 function resizeCanvas() {
+  if (!canvas || !context) return;
+
   width = window.innerWidth;
   height = window.innerHeight;
   const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
@@ -28,6 +38,7 @@ function resizeCanvas() {
 }
 
 function projectPoint(point, rotation) {
+  const center = getSceneCenter();
   const cosY = Math.cos(rotation);
   const sinY = Math.sin(rotation);
   const cosX = Math.cos(rotation * 0.45);
@@ -40,8 +51,8 @@ function projectPoint(point, rotation) {
   const scale = Math.min(width, height) / finalZ;
 
   return {
-    x: width * 0.68 + rotatedX * scale,
-    y: height * 0.48 + rotatedY * scale,
+    x: center.x + rotatedX * scale,
+    y: center.y + rotatedY * scale,
     z: finalZ,
     alpha: Math.max(0.18, 1 - finalZ / 15),
     size: point.size * Math.max(0.6, scale / 78),
@@ -50,19 +61,20 @@ function projectPoint(point, rotation) {
 }
 
 function drawScene() {
+  if (!context) return;
+
   context.clearRect(0, 0, width, height);
   context.save();
   context.globalCompositeOperation = "lighter";
 
   const projected = points.map((point) => projectPoint(point, angle)).sort((a, b) => b.z - a.z);
-  const centerX = width < 900 ? width * 0.5 : width * 0.68;
-  const centerY = height * 0.48;
+  const center = getSceneCenter();
 
   context.strokeStyle = "rgba(99, 216, 255, 0.16)";
   context.lineWidth = 1;
   for (let ring = 0; ring < 3; ring += 1) {
     context.beginPath();
-    context.ellipse(centerX, centerY, 130 + ring * 42, 58 + ring * 18, angle * (0.45 + ring * 0.08), 0, Math.PI * 2);
+    context.ellipse(center.x, center.y, 130 + ring * 42, 58 + ring * 18, angle * (0.45 + ring * 0.08), 0, Math.PI * 2);
     context.stroke();
   }
 
@@ -93,9 +105,11 @@ function drawScene() {
   }
 }
 
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
-drawScene();
+if (canvas && context) {
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+  drawScene();
+}
 
 const missionNodes = document.querySelectorAll(".mission-node");
 const focusScore = document.querySelector("#focus-score");
@@ -103,10 +117,15 @@ const focusScore = document.querySelector("#focus-score");
 missionNodes.forEach((node) => {
   node.addEventListener("click", () => {
     const targetId = node.dataset.target;
-    document.querySelector(`#${targetId}`).scrollIntoView({ behavior: "smooth" });
+    const targetSection = document.querySelector(`#${targetId}`);
+    if (!targetSection) return;
+
+    targetSection.scrollIntoView({ behavior: "smooth" });
     missionNodes.forEach((item) => item.classList.remove("active"));
     node.classList.add("active");
-    focusScore.textContent = node.querySelector("strong").textContent;
+    if (focusScore) {
+      focusScore.textContent = node.querySelector("strong")?.textContent || "";
+    }
   });
 });
 
@@ -148,7 +167,9 @@ const sectionObserver = new IntersectionObserver(
       if (!matchingNode) return;
       missionNodes.forEach((node) => node.classList.remove("active"));
       matchingNode.classList.add("active");
-      focusScore.textContent = matchingNode.querySelector("strong").textContent;
+      if (focusScore) {
+        focusScore.textContent = matchingNode.querySelector("strong")?.textContent || "";
+      }
     });
   },
   { rootMargin: "-40% 0px -50% 0px" },
@@ -156,15 +177,22 @@ const sectionObserver = new IntersectionObserver(
 
 document.querySelectorAll("#projects, #process, #contact").forEach((section) => sectionObserver.observe(section));
 
-document.querySelector(".contact-form").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const form = event.currentTarget;
-  const name = form.elements.name.value.trim() || "there";
-  const type = form.elements["project-type"].value.toLowerCase();
-  const message = form.elements.message.value.trim();
-  const subject = encodeURIComponent(`New ${type} project inquiry`);
-  const body = encodeURIComponent(`Hi Abhishek,\n\nI'm ${name}.\n\n${message || "I want to discuss a project."}`);
+const contactForm = document.querySelector(".contact-form");
 
-  document.querySelector("#form-note").textContent = "Opening your email app with a prepared project message.";
-  window.location.href = `mailto:hello@example.com?subject=${subject}&body=${body}`;
-});
+if (contactForm) {
+  contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const name = form.elements.name.value.trim() || "there";
+    const type = form.elements["project-type"].value.toLowerCase();
+    const message = form.elements.message.value.trim();
+    const subject = encodeURIComponent(`New ${type} project inquiry`);
+    const body = encodeURIComponent(`Hi Abhishek,\n\nI'm ${name}.\n\n${message || "I want to discuss a project."}`);
+    const formNote = document.querySelector("#form-note");
+
+    if (formNote) {
+      formNote.textContent = "Opening your email app with a prepared project message.";
+    }
+    window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
+  });
+}
